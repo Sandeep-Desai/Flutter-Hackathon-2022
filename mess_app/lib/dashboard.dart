@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mess_app/firstLoading.dart';
 import 'package:mess_app/loading.dart';
 import 'package:mess_app/utilities/gsheets.dart';
 import 'package:mess_app/order/profileModel.dart';
@@ -38,199 +39,235 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: (!isLoading)
-          ? const Loading()
-          : Scaffold(
-              backgroundColor: Colors.grey[900],
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 50, right: 50, bottom: 20, top: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                       CircleAvatar(
-                        radius: 70,
-                        backgroundImage: NetworkImage(
-                            profile[1].profile_url)),
-                      SizedBox(height: 10),
-                      Text(profile[1].profile_name,
+        home: (!isLoading)
+            ? const FirstLoading()
+            : Scaffold(
+                body: SingleChildScrollView(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              height: 270,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage("assets/xy.png"),
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(20),
+                                      bottomRight: Radius.circular(20))),
+                            ),
+                            Positioned(
+                              bottom: -72.5,
+                              left: 115.25,
+                              child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue[200],
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.blue,
+                                      blurRadius: 2,
+                                      spreadRadius: 0.1,
+                                    ),
+                                  ],
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.blue,
+                                  backgroundImage:
+                                      NetworkImage(profile[1].profile_url),
+                                  radius: 60,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                        SizedBox(height: 90),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Hey! ",
+                              style: GoogleFonts.lato(
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              profile[1].profile_name,
+                              style: GoogleFonts.lato(
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 40, 158, 255),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          profile[1].profile_email,
                           style: GoogleFonts.lato(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700)),
-                      SizedBox(height: 5),
-                      Text(profile[1].profile_email,
-                          style: GoogleFonts.lato(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.italic)),
-                      SizedBox(height: 30),
-                      Column(
-                        children: [
-                          SizedBox(
-                            width: 450,
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Color.fromARGB(255, 53, 51, 51)),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                  ))),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/messportal');
-                              },
-                              child: Row(
+                            fontSize: 15,
+                            color: Colors.blue,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: 180,
+                          width: MediaQuery.of(context).size.width,
+                          //color : Colors.red,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20.0),
-                                    child: Icon(
-                                      Icons.food_bank,
-                                      size: 35,
-                                      color: Colors.white,
+                                  Container(
+                                    height: 90,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.35,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image:
+                                            AssetImage("assets/restaurant.png"),
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    'Mess Portal',
-                                    style: GoogleFonts.lato(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
+                                  Container(
+                                    height: 130,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.35,
+                                    //color : Colors.blue,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage("assets/crowd.png"),
+                                      ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10.0),
-                                    child: Icon(
-                                      Icons.arrow_forward,
-                                      size: 30.0,
-                                      color: Colors.white,
-                                    ),
-                                  )
                                 ],
                               ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: 450,
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Color.fromARGB(255, 53, 51, 51)),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                  ))),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/traffic');
-                              },
-                              child: Row(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 15.0),
-                                    child: Icon(
-                                      Icons.people,
-                                      size: 35,
-                                      color: Colors.white,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.blue,
+                                          blurRadius: 3,
+                                          spreadRadius: 0.1,
+                                        ),
+                                      ],
+                                    ),
+                                    height: 40,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.35,
+                                    //color : Colors.blue[300],
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          side: BorderSide(
+                                            width: 1.0,
+                                            color: Colors.blue,
+                                          ),
+                                          primary: Colors.white),
+                                      child: Text(
+                                        'Mess Portal',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/messportal');
+                                      },
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Traffic in Mess',
-                                    style: GoogleFonts.lato(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.blue,
+                                          blurRadius: 3,
+                                          spreadRadius: 0.1,
+                                        ),
+                                      ],
+                                    ),
+                                    height: 40,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.35,
+                                    //color : Colors.red,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          side: BorderSide(
+                                            width: 1.0,
+                                            color: Colors.blue,
+                                          ),
+                                          primary: Colors.white),
+                                      child: Text(
+                                        'Mess Traffic',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/traffic');
+                                      },
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10.0),
-                                    child: Icon(
-                                      Icons.arrow_forward,
-                                      size: 30.0,
-                                      color: Colors.white,
-                                    ),
-                                  )
                                 ],
                               ),
-                            ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: 450,
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Color.fromARGB(255, 53, 51, 51)),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                  ))),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/feedback');
-                              },
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20.0),
-                                    child: Icon(
-                                      Icons.feedback,
-                                      size: 35,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  Text(
-                                    'Feedback',
-                                    style: GoogleFonts.lato(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10.0),
-                                    child: Icon(
-                                      Icons.arrow_forward,
-                                      size: 30.0,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                ],
+                        ),
+                        SizedBox(height: 30),
+                        Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          //color: Colors.yellow,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                side: BorderSide(
+                                  width: 1.0,
+                                  color: Colors.blue,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30)),
+                                primary: Colors.white,
+                                shadowColor: Colors.blue),
+                            child: Text(
+                              'Feedback',
+                              style: GoogleFonts.lato(
+                                fontSize: 17,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/feedback');
+                            },
                           ),
-                        ],
-                      )
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-    );
+              ));
     ;
   }
 }

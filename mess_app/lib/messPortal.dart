@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mess_app/messDetails.dart';
 import 'package:mess_app/messPass.dart';
+import 'package:mess_app/pay.dart';
 import 'package:mess_app/studentProfile.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:mess_app/preBooking.dart';
+import 'package:mess_app/upi.dart';
 
 class MessPortal extends StatefulWidget {
   const MessPortal({Key? key}) : super(key: key);
@@ -19,7 +21,7 @@ class _MessPortalState extends State<MessPortal> {
     const StudentProfile(),
     const MessPass(),
     const MessDetails(),
-    const PreBooking()
+    const PreBooking(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -27,14 +29,12 @@ class _MessPortalState extends State<MessPortal> {
       body: tabs[_currentIndex],
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 2, 162, 255),
-        title: Text(
-          'Mess Portal',
-          style: GoogleFonts.lato(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Color.fromARGB(255, 255, 255, 255),
-          ),
+        title: Text('MessPortal'),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover, image: AssetImage('assets/Appbar.png'))),
         ),
       ),
       bottomNavigationBar: BottomNavyBar(
